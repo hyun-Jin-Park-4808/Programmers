@@ -5,18 +5,6 @@ function solution(array) {
         map.set(num, (map.get(num) || 0) + 1);
     }
     
-    let mode = -1;
-    let maxCount = 0;
-    let isDuplicated = false;
-    
-    for(const [value, count] of map.entries()) {
-        if(count > maxCount) {
-            maxCount = count;
-            mode = value;
-            isDuplicated = false;
-        } else if (count === maxCount) {
-            isDuplicated = true;
-        }
-    } 
-    return isDuplicated ? -1 : mode;
+    const array2 = [...map].sort((a, b) => b[1] - a[1]);
+    return array2.length === 1 || array2[0][1] > array2[1][1] ? array2[0][0] : -1;
 }
