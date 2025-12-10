@@ -2,29 +2,18 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] array) {
-        Map<Integer, Integer> countMap = new HashMap<>();
+        Map<Integer, Integer> map = new HashMap<>();
         
         for (int num : array) {
-            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
         
-        int mode = -1;
-        int maxCount = 0;
-        boolean isDuplicated = false;
+        List<Map.Entry<Integer, Integer>> list = new ArrayList<>(map.entrySet());
+        list.sort((a, b) -> b.getValue().compareTo(a.getValue()));
         
-        for(Map.Entry<Integer, Integer> entry : countMap.entrySet()) {
-            int value = entry.getKey();
-            int count = entry.getValue();
-            
-            if(count > maxCount) {
-                maxCount = count;
-                mode = value;
-                isDuplicated = false;
-            } else if(count == maxCount) {
-                isDuplicated = true;
-            }
+        if(list.size() == 1 || list.get(0).getValue() > list.get(1).getValue()) {
+            return list.get(0).getKey();
         }
-        
-        return isDuplicated ? -1 : mode;
+        return -1;
     }
 }
